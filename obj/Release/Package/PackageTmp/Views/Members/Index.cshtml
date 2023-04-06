@@ -1,0 +1,746 @@
+﻿@model IEnumerable<TopGym_System.Models.Members>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2 style="text-align:center;color:black;font-weight:bold;font-palette:dark">بيانات المشتركين </h2>
+
+
+
+
+
+
+    <hr />
+    <div class="container">
+        @using (Html.BeginForm("PrintMembersData", "Members"))
+        {
+
+
+            <div class="row">
+                <div class="col-md-4 text-left ">
+                    <button style=" font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">  <i class="fa fa-plus"> </i> اضافة </button>
+                    <button style=" font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white;" type="submit" class="btn btn-danger " formtarget="_blank">
+                        طباعة جميع الاعضاء <i class="fa fa-print" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="col-md-8 text-right">
+
+                    <input style="background-color:#e8e8e8;font-weight:bold;" id="myInput" type="search" class="form-control " placeholder="ابحث هنا " aria-label="Search" aria-describedby="search-addon" />
+
+                  
+                </div>
+
+            </div>
+
+        }
+    </div>
+    <hr />
+
+
+    @*<div class="row heder_title">
+            <div class="col-6">
+            </div>
+            <div class="d-grid gap-2 d-md-block">
+
+
+
+            </div>
+            <div class="col-6 text-left">
+
+
+
+
+            </div>
+        </div>*@
+    @*}*@
+
+    @*<div class="row" style="padding-top:10px;">
+            <div class="col-md-2">
+
+                <button style=" font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">  <i class="fa fa-plus"> </i> اضافة </button><br /><br />
+
+            </div>
+            <div class="col-md-10 ">
+
+            </div>
+
+
+        </div>*@
+
+
+
+  
+    <table class="table table-bordered table-hover table-striped " >
+        <thead>
+            <tr class="" style="background-color: #000632; color: white;">
+                <th class="text-right">
+                    ID
+                </th>
+                <th class="text-right">
+                    اسم المشترك
+                </th>
+                <th class="text-right">
+                    طول المشترك
+                </th>
+                <th class="text-right">
+                    وزن المشترك
+                </th>
+
+                <th class="text-right">
+                    تاريخ الابنداء
+                </th>
+
+                <th class="text-right">
+                    تاريخ الانتهاء
+                </th>
+                @*<th class="text-right">
+                    مدة الاشتراك
+                </th>*@
+                <th class="text-right">
+                    نوع الاشتراك
+                </th>
+                <th class="text-right">
+                    رقم التيلفون
+                </th>
+                @*<th class="text-right">
+            نوع المشترك
+        </th>*@
+                <th class="text-right">
+                    قيمة الاشتراك
+                </th>
+                <th class="text-right">
+                    المدفوع
+                </th>
+                <th class="text-right">
+                    الخصم
+                </th>
+
+                <th class="text-right">
+                    ملاحظات
+                </th>
+                <th class="text-right">
+                    تعديل
+                </th>
+                <th class="text-right">
+                    حذف
+                </th>
+                <th class="text-right">
+                    طباعة
+                </th>
+                @*<th class="text-right">
+            طباعة
+        </th>*@
+            </tr>
+        </thead>
+        <tbody id="myTable" class="tbody"></tbody>
+    </table>
+      
+
+    <hr />
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header " style="background-color: #428bca ">
+                <button type="button" class="close " data-dismiss="modal">×</button>
+                <h4 style="text-align: center; color: white; font-weight: bold; font-family: sans-serif" class="modal-title" id="myModalLabel"> مشترك جديد</h4>
+            </div>
+            <div class="modal-body" style="background-color: #e6e6e6 ">
+                <form>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label style="color:darkblue;font-weight:bold;" for="PhoneNumber">رقم التلفون</label>
+                            <input type="text" class="form-control" id="PhoneNumber" placeholder="رقم التلفون" />
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label style="color:darkblue;font-weight:bold;" for="Id">ID</label>
+                            <input type="text" class="form-control" id="ID" placeholder=" سوف يتم اضافة ID عند الانشاء" disabled="disabled" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label style="color:darkblue;font-weight:bold;" for="MemberName">اسم المشترك</label>
+                            <input type="text" class="form-control" id="MemberName" placeholder="اسم المشترك" />
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-md-4">
+                            <label style="color:darkblue;font-weight:bold;" for="Height">طول المشترك</label>
+                            <input type="text" class="form-control" id="Height" placeholder="طول المشترك" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label style="color:darkblue;font-weight:bold;" for="MemberWeight">وزن المشترك</label>
+                            <input type="text" class="form-control" id="MemberWeight" placeholder="وزن المشترك" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label style="color:darkblue;font-weight:bold;" for="GenderTypeId">نوع المشترك</label>
+                            @Html.DropDownList("GenderTypeId", null, "اختر", htmlAttributes: new { @class = "form-control", @Id = "GenderTypesId" })
+
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+            <label style="color:darkblue;font-weight:bold;" for="Start_Date">Start_Date</label>
+            <input type="text" class="form-control" id="Start_Date" placeholder="Start_Date" />
+        </div>*@
+
+                    <div class="row">
+
+                        <div class="form-group col-md-6">
+
+                            <label style="color:darkblue;font-weight:bold;" for="CategoriesId">نوع الاشتراك</label>
+                            @Html.DropDownList("CategoryId", null, "اختر", htmlAttributes: new { @class = "form-control", @Id = "CategoriesId" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label style="color:darkblue;font-weight:bold;" for="SubscriptionsId">مدة الاشتراك</label>
+                            @Html.DropDownList("SubscriptionId", null, "اختر", htmlAttributes: new { @class = "form-control", @Id = "SubscriptionsId" })
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="form-group col-md-4">
+                            <label style="color:darkblue;font-weight:bold;" for="Paid"> المدفوع</label>
+                            <input type="text" readonly="readonly" class="form-control" id="Paid" placeholder=" المدفوع" />
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label style="color:darkblue;font-weight:bold;" for="SubscriptionPriceDiscount"> قيمة الخصم</label>
+                            <input type="text" class="form-control" id="SubscriptionPriceDiscount" placeholder="قيمة الخصم" />
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label style="color:darkblue;font-weight:bold;" for="SubscriptionPrice"> سعر الاشتراك</label>
+                            <input type="text" class="form-control" id="SubscriptionPrice" readonly="readonly" placeholder="سعر الاشتراك" />
+
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label style="color:darkblue;font-weight:bold;" for="Notes">ملاحظات</label>
+                            <input type="text" class="form-control" id="Notes" placeholder="ملاحظات" />
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+
+
+
+            <div class="modal-footer" style="background-color: #428bca; ">
+                <div class="row">
+                    <div class="col-md-6 text-left">
+                        <button style="font-weight:bold;" type="button" class="btn btn-danger" data-dismiss="modal">اغلاق</button>
+
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button style="font-weight:bold;" type="button" class="btn btn-success" id="btnAdd" onclick="return Add();">اضافة</button>
+                        <button style="font-weight:bold;" type="button" class="btn btn-success" id="btnUpdate" @*style="display:none;"*@ onclick="Update();">تعديل</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+                <!--<div class="modal-footer bg-info">
+    <button style="font-weight:bold;" type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">اضافة</button>
+    <button style="font-weight:bold;" type="button" class="btn btn-primary" id="btnUpdate"-->
+                @*style="display:none;"*@
+                <!--onclick="Update();">تعديل</button>
+        <button style="font-weight:bold;" type="button" class="btn btn-danger" data-dismiss="modal">اغلاق</button>
+    </div>-->
+            </div>
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            loadData();
+        });
+
+
+        function loadData() {
+            $.ajax({
+                url: "/Members/List",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.Id + '</td>';
+                        html += '<td>' + item.MemberName + '</td>';
+                        html += '<td>' + item.Height + '</td>';
+
+                        html += '<td>' + item.MemberWeight + '</td>';
+                        var Sdate = new Date(parseInt(item.Start_Date.substr(6)));
+                        html += '<td>' + Sdate.getFullYear() + "-" + (Sdate.getMonth() + 1) + "-" + Sdate.getDate() + '</td>';
+
+                        var date = new Date(parseInt(item.End_Date.substr(6)));
+                        html += '<td>' + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + '</td>';
+                        /*html += '<td>' + item.SubscriptionName + '</td>';*/
+
+                        html += '<td>' + item.CategoryName + '</td>';
+                        html += '<td>' + item.PhoneNumber + '</td>';
+                        //html += '<td>' + item.GenderName + '</td>';
+                        html += '<td>' + item.SubscriptionPrice + '</td>';
+                        html += '<td>' + item.Paid + '</td>';
+                        html += '<td>' + item.SubscriptionPriceDiscount + '</td>';
+                       
+
+
+                      
+                        html += '<td>' + item.Notes + '</td>';
+
+                        html += '<td><a class="btn btn-warning " style="border-radius:3px;" href="#" onclick="return getbyID(' + item.Id + ')"><i style="color:black;font-size:large;" title="تعديل" class="fa fa-pencil"></i></a>'
+                        html += '<td><a class="btn btn-danger " style="border-radius:3px;" href="#" onclick="Delele(' + item.Id + ')">  <i style="color:white;font-size:large;"  title="حذف"  class="fa fa-trash-o" aria-hidden="true"></i></a ></td > '
+
+                        html += '<td> <Form action="/Members/PrintDataRDLCById/' + item.Id + '" method="post"> <button formtarget="_blank" type="submit" class="btn btn-primary" style="border-radius:3px;" title="طباعة" style=" "><i style="color:white;font-size:large;"  class="fa fa-print" aria-hidden="true"></i></button></Form> </td>';
+
+                        html += '</tr>';
+                    });
+                    $('.tbody').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+        function Add() {
+
+            var res = validate();
+            if (res == false) {
+                return false;
+            }
+            var empObj = {
+                Id: $('#ID').val(),
+                MemberName: $('#MemberName').val(),
+                Height: $('#Height').val(),
+                PhoneNumber: $('#PhoneNumber').val(),
+                GenderTypeId: $('#GenderTypesId').val(),
+                MemberWeight: $('#MemberWeight').val(),
+
+                //Start_Date: $('#Start_Date').val(),
+                CategoryId: $('#CategoriesId').val(),
+                SubscriptionId: $('#SubscriptionsId').val(),
+                SubscriptionPrice: $('#SubscriptionPrice').val(),
+                SubscriptionPriceDiscount: $('#SubscriptionPriceDiscount').val(),
+
+                Notes: $('#Notes').val(),
+                Paid: $('#Paid').val(),
+
+
+
+                //    Country: $('#Country').val()
+            };
+            $.ajax({
+                url: "/Members/Add",
+                data: JSON.stringify(empObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    loadData();
+
+                    $('#myModal').modal('hide');
+                    Swal.fire(
+                        'Good job!',
+                        'You clicked the button!',
+                        'success'
+                    )
+                },
+              
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+        function getbyID(Id) {
+            $('#MemberName').css('border-color', 'lightgrey');
+            $('#Height').css('border-color', 'lightgrey');
+
+            $('#MemberWeight').css('border-color', 'lightgrey');
+            $('#PhoneNumber').css('border-color', 'lightgrey');
+            $('#GenderTypesId').css('border-color', 'lightgrey');
+
+
+            //$('#Start_Date').css('border-color', 'lightgrey');
+            $('#Notes').css('border-color', 'lightgrey');
+            $('#Paid').css('border-color', 'lightgrey');
+
+            $('#SubscriptionPrice').css('border-color', 'lightgrey');
+
+            $('#SubscriptionPriceDiscount').css('border-color', 'lightgrey');
+
+
+            $('#CategoriesId').css('border-color', 'lightgrey');
+
+            $('#SubscriptionId').css('border-color', 'lightgrey');
+            //$('#Country').css('border-color', 'lightgrey');
+            $.ajax({
+                url: "/Members/getbyID/" + Id,
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    $('#ID').val(result.Id);
+                    $('#MemberName').val(result.MemberName);
+                    $('#Height').val(result.Height);
+                    $('#MemberWeight').val(result.MemberWeight);
+                    $('#PhoneNumber').val(result.PhoneNumber);
+                    $('#GenderTypesId').val(result.GenderTypeId);
+
+
+                    //$('#Start_Date').val(result.Start_Date);
+                    //$('#End_Date').val(result.End_Date);
+
+                    $('#Notes').val(result.Notes);
+                    $('#Paid').val(result.Paid);
+
+                    $('#SubscriptionPrice').val(result.SubscriptionPrice);
+                    $('#SubscriptionPriceDiscount').val(result.SubscriptionPriceDiscount);
+                    $('#CategoriesId').val(result.CategoryId);
+                    $('#SubscriptionsId').val(result.SubscriptionId);
+                    //$('#Country').val(result.Country);
+                    $('#myModal').modal('show');
+                    $('#btnUpdate').show();
+                    $('#btnAdd').hide();
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+            return false;
+        }
+        function Update() {
+            var res = validate();
+            if (res == false) {
+                return false;
+            }
+            var empObj = {
+                Id: $('#ID').val(),
+                MemberName: $('#MemberName').val(),
+                Height: $('#Height').val(),
+
+                MemberWeight: $('#MemberWeight').val(),
+                PhoneNumber: $('#PhoneNumber').val(),
+                GenderTypeId: $('#GenderTypesId').val(),
+                Start_Date: $('#Start_Date').val(),
+                End_Date: $('#End_Date').val(),
+
+                Notes: $('#Notes').val(),
+                Paid: $('#Paid').val(),
+
+                SubscriptionPrice: $('#SubscriptionPrice').val(),
+                SubscriptionPriceDiscount: $('#SubscriptionPriceDiscount').val(),
+
+                CategoryId: $('#CategoriesId').val(),
+
+                SubscriptionId: $('#SubscriptionsId').val(),
+                //    Country: $('#Country').val(),
+            };
+            $.ajax({
+                url: "/Members/Update",
+                data: JSON.stringify(empObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    loadData();
+                    $('#myModal').modal('hide');
+                    $('#ID').val("");
+                    $('#MemberName').val("");
+                    $('#Height').val("");
+                    $('#PhoneNumber').val("");
+                    $('#GenderTypesId').val("");
+                    $('#MemberWeight').val("");
+
+                    //$('#Start_Date').val("");
+                    $('#Notes').val("");
+                    $('#Paid').val("");
+
+                    $('#SubscriptionPrice').val("");
+                    $('#SubscriptionPriceDiscount').val("");
+                    $('#CategoriesId').val("");
+                    $('#SubscriptionsId').val("");
+                    //    $('#Country').val("");
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+        function Delele(ID) {
+            var ans = confirm("هل انك متاكد من حذف هذا المشترك.....؟");
+            if (ans) {
+                $.ajax({
+                    url: "/Members/Delete/" + ID,
+                    type: "POST",
+                    contentType: "application/json;charset=UTF-8",
+                    dataType: "json",
+                    success: function (result) {
+                        loadData();
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+        }
+        function clearTextBox() {
+            $('#ID').val("");
+            $('#MemberName').val("");
+            $('#Height').val("");
+
+            $('#MemberWeight').val("");
+            $('#PhoneNumber').val("");
+            $('#GenderTypesId').val("");
+            //$('#Start_Date').val("");
+            $('#Notes').val("");
+            $('#SubscriptionPrice').val("");
+
+            $('#SubscriptionPriceDiscount').val("");
+
+            $('#CategoryId').val("");
+            $('#SubscriptionId').val("");
+            //$('#Country').val("");
+            $('#btnUpdate').hide();
+            $('#btnUpdate').hide();
+            $('#btnAdd').show();
+            $('#MemberName').css('border-color', 'lightgrey');
+            //$('#Start_Date').css('border-color', 'lightgrey');
+            $('#Notes').css('border-color', 'lightgrey');
+            $('#Paid').css('border-color', 'lightgrey');
+
+            $('#CategoriesId').css('border-color', 'lightgrey');
+            $('#SubscriptionsId').css('border-color', 'lightgrey');
+            //    $('#Country').css('border-color', 'lightgrey');
+        }
+        function validate() {
+            var isValid = true;
+            if ($('#MemberName').val().trim() == "") {
+                $('#MemberName').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#MemberName').css('border-color', 'lightgrey');
+            }
+
+            if ($('#SubscriptionsId').val().trim() == "") {
+                $('#SubscriptionsId').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#SubscriptionsId').css('border-color', 'lightgrey');
+            }
+            if ($('#Notes').val().trim() == "") {
+                $('#Notes').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#Notes').css('border-color', 'lightgrey');
+            }
+            if ($('#CategoriesId').val().trim() == "") {
+                $('#CategoriesId').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#CategoriesId').css('border-color', 'lightgrey');
+            }
+            if ($('#Height').val().trim() == "") {
+                $('#Height').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#Height').css('border-color', 'lightgrey');
+            }
+            if ($('#MemberWeight').val().trim() == "") {
+                $('#MemberWeight').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#MemberWeight').css('border-color', 'lightgrey');
+            }
+            if ($('#PhoneNumber').val().trim() == "") {
+                $('#PhoneNumber').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#PhoneNumber').css('border-color', 'lightgrey');
+            }
+            
+            if ($('#GenderTypesId').val().trim() == "") {
+                $('#GenderTypesId').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#GenderTypesId').css('border-color', 'lightgrey');
+            }
+            if ($('#SubscriptionPrice').val().trim() == "") {
+                $('#SubscriptionPrice').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#SubscriptionPrice').css('border-color', 'lightgrey');
+            }
+            if ($('#SubscriptionPriceDiscount').val().trim() == "") {
+                $('#SubscriptionPriceDiscount').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#SubscriptionPriceDiscount').css('border-color', 'lightgrey');
+            }
+            if ($('#Paid').val().trim() == "") {
+                $('#Paid').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#Paid').css('border-color', 'lightgrey');
+            }
+            return isValid;
+        }
+    </script>
+
+
+    @*//Search*@
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+
+    <script >
+        function loadItem() {
+            var itemId = $("#SubscriptionsId").val();
+            var itemId2 = $("#CategoriesId").val();
+
+            GetItemUnitPrice(itemId);
+        }
+        $("#SubscriptionsId" && "#CategoriesId").change(function () {
+            var itemId = $("#SubscriptionsId").val();
+            var itemId2 = $("#CategoriesId").val();
+
+            $.ajax({
+                async: true,
+                type: 'GET',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: { itemId: itemId , itemId2 },
+                url: '/Members/getItemUnitPrice',
+                success: function (data) { $("#SubscriptionPrice").val(data).toFixed(2) },
+                error: function () { alert('There is some problem to get the unit price.') }
+            });
+        })
+
+        $("#SubscriptionPriceDiscount").keyup(function () {
+            var SubscriptionPrice = $("#SubscriptionPrice").val();
+            var PriceDiscount = $("#SubscriptionPriceDiscount").val();
+
+            var Paid = (SubscriptionPrice - PriceDiscount);
+            $("#Paid").val(parseFloat(Paid).toFixed(2));
+
+        })
+       
+
+
+
+
+
+    </script>
+
+
+
+}
+
+@*<h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subscription.SubscriptionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Start_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.End_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subscription.SubscriptionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@
+
+

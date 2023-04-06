@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html >
+    <html  dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+        <link href="//cdn.jsdelivr.net/npm/sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+
+
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+
+    </head>
+    <body>
+        <div style="background-color: #000632;" class="navbar navbar-inverse navbar-fixed-top ">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <li> @Html.Partial("_LoginPartial")</li>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                       
+
+
+
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+
+
+                        @*<li>@Html.ActionLink("المشتركين الرجال", "Index", "MensMembers")</li>*@
+                        @if (User.IsInRole("Admins"))
+                        {
+                            <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+
+                            <li>@Html.ActionLink("Subscriptions", "Index", "Subscriptions")</li>
+                            <li>@Html.ActionLink("GenderTypes", "Index", "GenderTypes")</li>
+                        }
+
+
+                        </ul>
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("الانظمة الغذائية", "WomenList", "Members")
+                        </li>
+                        <li>
+                            @Html.ActionLink("التمارين", "MenList", "Members")
+                        </li>
+                        <li>
+                            @Html.ActionLink("جميع الاعضاء", "Index", "Members")
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class=" body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+        @RenderSection("scripts", required: false)
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+
+
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+            });
+        </script>
+    </body>
+</html>
